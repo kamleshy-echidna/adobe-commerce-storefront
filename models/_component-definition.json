@@ -32,6 +32,12 @@
           "...": "../blocks/cards/_*.json#/definitions"
         },
         {
+          "...": "../blocks/feature-card/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/filterable-list/_*.json#/definitions"
+        },
+        {
           "...": "../blocks/carousel/_*.json#/definitions"
         },
         {
@@ -40,7 +46,9 @@
         {
           "...": "../blocks/enrichment/_*.json#/definitions"
         },
-
+        {
+          "...": "../blocks/filterable-list/_*.json#/definitions"
+        },
         {
           "...": "../blocks/fragment/_*.json#/definitions"
         },

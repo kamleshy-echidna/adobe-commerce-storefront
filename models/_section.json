@@ -158,6 +158,7 @@
         "commerce-shipping-status",
         "commerce-wishlist",
         "enrichment",
+        "filterable-list",
         "fragment",
         "image",
         "product-details",

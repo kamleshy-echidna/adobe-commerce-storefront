@@ -1,0 +1,99 @@
+{
+  "definitions": [
+    {
+      "title": "Filterable List",
+      "id": "filterable-list",
+      "model": "filterable-list",
+      "filter": "filterable-list",
+      "plugins": {
+        "da": {
+          "name": "filterable-list",
+          "rows": 1,
+          "columns": 2
+        }
+      }
+    },
+    {
+      "title": "Filterable List Item",
+      "id": "filterable-list-item",
+      "model": "filterable-list-item",
+      "plugins": {
+        "da": {
+          "name": "filterable-list-item",
+          "rows": 1,
+          "columns": 3,
+          "fields": [
+            { "name": "category", "selector": "div:nth-child(1)" },
+            { "name": "title", "selector": "div:nth-child(2)" },
+            { "name": "text", "selector": "div:nth-child(3)" }
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "filterable-list",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "placeholder",
+          "label": "Search placeholder",
+          "value": "Search…"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "empty-message",
+          "label": "Empty results message",
+          "value": "No matching items."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "search-label",
+          "label": "Search field label",
+          "value": "Search"
+        }
+      ]
+    },
+    {
+      "id": "filterable-list-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "category",
+          "value": "",
+          "label": "Category",
+          "required": false
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "value": "",
+          "label": "Title",
+          "required": true
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "value": "",
+          "label": "Text",
+          "valueType": "string",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "filterable-list",
+      "components": [
+        "filterable-list-item"
+      ]
+    }
+  ]
+}
