@@ -292,45 +292,6 @@
           }
         },
         {
-          "title": "Filterable List",
-          "id": "filterable-list",
-          "model": "filterable-list",
-          "filter": "filterable-list",
-          "plugins": {
-            "da": {
-              "name": "filterable-list",
-              "rows": 1,
-              "columns": 2
-            }
-          }
-        },
-        {
-          "title": "Filterable List Item",
-          "id": "filterable-list-item",
-          "model": "filterable-list-item",
-          "plugins": {
-            "da": {
-              "name": "filterable-list-item",
-              "rows": 1,
-              "columns": 3,
-              "fields": [
-                {
-                  "name": "category",
-                  "selector": "div:nth-child(1)"
-                },
-                {
-                  "name": "title",
-                  "selector": "div:nth-child(2)"
-                },
-                {
-                  "name": "text",
-                  "selector": "div:nth-child(3)"
-                }
-              ]
-            }
-          }
-        },
-        {
           "title": "Fragment",
           "id": "fragment",
           "model": "fragment",

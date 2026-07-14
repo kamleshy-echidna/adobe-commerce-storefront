@@ -47,9 +47,6 @@
           "...": "../blocks/enrichment/_*.json#/definitions"
         },
         {
-          "...": "../blocks/filterable-list/_*.json#/definitions"
-        },
-        {
           "...": "../blocks/fragment/_*.json#/definitions"
         },
         {
