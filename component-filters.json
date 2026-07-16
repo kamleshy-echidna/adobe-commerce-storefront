@@ -38,6 +38,7 @@
       "commerce-shipping-status",
       "commerce-wishlist",
       "enrichment",
+      "feature-card",
       "filterable-list",
       "fragment",
       "image",
@@ -86,7 +87,7 @@
   {
     "id": "feature-card",
     "components": [
-      "card"
+      "feature-card-item"
     ]
   },
   {

@@ -131,7 +131,7 @@
           }
         },
         {
-          "title": "feature-card",
+          "title": "Feature Card",
           "id": "feature-card",
           "model": "feature-card",
           "filter": "feature-card",
@@ -143,9 +143,9 @@
           }
         },
         {
-          "title": "Card",
-          "id": "card",
-          "model": "card",
+          "title": "Feature Card Item",
+          "id": "feature-card-item",
+          "model": "feature-card-item",
           "plugins": {
             "da": {
               "rows": 1,
