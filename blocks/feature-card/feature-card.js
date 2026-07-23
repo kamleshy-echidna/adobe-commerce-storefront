@@ -2,9 +2,34 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {
   block.innerHTML = `
-    <div style="padding:20px;border:2px solid red">
-      <h2>Feature Card Working</h2>
-      <p>My first custom block.</p>
+    <div class="feature-cards">
+
+      <article class="feature-card">
+
+          <figure class="feature-card__image">
+
+              <img>
+
+          </figure>
+
+          <div class="feature-card__content">
+
+              <h3 class="feature-card__title">
+
+              </h3>
+
+              <p class="feature-card__description">
+
+              </p>
+
+              <a class="feature-card__button">
+
+              </a>
+
+          </div>
+
+      /article>
+
     </div>
   `;
 }

@@ -1,7 +1,7 @@
 :root {
-  --desktop-item-panel-max-width: 300px;
+  --desktop-item-panel-max-width: 200px;
   --desktop-item-panel-min-width: 200px;
-  --desktop-large-panel-width: 900px;
+  --desktop-large-panel-width: 1200px;
   --desktop-panel-min-height: 200px;
   --desktop-panel-max-height: 600px;
 }
@@ -248,9 +248,20 @@ header nav .nav-sections ul>li:empty {
   }
 
   header nav .nav-sections .nav-drop[aria-expanded='true'] ul {
-    flex-flow: column wrap;
-    max-height: calc(var(--desktop-panel-max-height) - 2 * var(--spacing-xbig));
-    min-height: calc(var(--desktop-panel-min-height) - 2 * var(--spacing-xbig));
+    flex-flow: row wrap;
+    max-height: none;
+    min-height: 0;
+    width: 100%;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] ul {
+    overflow: visible;
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0 48px;
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li {
@@ -261,7 +272,7 @@ header nav .nav-sections ul>li:empty {
     background-color: var(--color-neutral-50);
     box-sizing: border-box;
     left: 0;
-    max-height: var(--desktop-panel-max-height);
+    max-height: none;
     min-height: var(--desktop-panel-min-height);
     padding: var(--spacing-xbig);
     position: absolute;
@@ -307,6 +318,59 @@ header nav .nav-sections ul>li:empty {
   header nav .nav-sections .nav-drop[aria-expanded='true'] {
     background-color: var(--color-neutral-200);
   }
+
+  /* Level A: category groups (Men, Women, Gear, Collections, Promotions) */
+  header nav .nav-sections .submenu-wrapper > ul > li {
+    margin-bottom: var(--spacing-medium, 16px);
+    min-width: 220px;
+  }
+
+  header nav .nav-sections .submenu-wrapper > ul > li > p > a {
+    font: var(--type-body-1-strong-font);
+    letter-spacing: var(--type-body-1-strong-letter-spacing);
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    color: var(--color-neutral-900);
+    text-decoration: none;
+  }
+
+  /* Level B: subcategory groups (Tops, Bottoms) */
+  header nav .nav-sections .submenu-wrapper > ul > li > ul > li {
+    margin-top: var(--spacing-small, 10px);
+    margin-bottom: var(--spacing-xsmall, 6px);
+  }
+
+  header nav .nav-sections .submenu-wrapper > ul > li > ul > li > p > a {
+    font: var(--type-body-2-strong-font);
+    font-size: 1.4rem;
+    letter-spacing: var(--type-body-2-strong-letter-spacing);
+    color: var(--color-neutral-800);
+    text-decoration: none;
+  }
+
+  /* Level C: leaf links (Hoodies & Sweatshirts, Jackets, Tees, Tanks...) */
+  header nav .nav-sections .submenu-wrapper > ul > li > ul > li > ul {
+    margin-top: var(--spacing-xxsmall, 4px);
+  }
+
+  header nav .nav-sections .submenu-wrapper > ul > li > ul > li > ul > li {
+    margin: 3px 0;
+  }
+
+  header nav .nav-sections .submenu-wrapper > ul > li > ul > li > ul > li > a {
+    font: var(--type-body-2-default-font);
+    letter-spacing: var(--type-body-2-default-letter-spacing);
+    color: var(--color-neutral-900);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  header nav .nav-sections .submenu-wrapper > ul > li > ul > li > ul > li > a:hover {
+    color: var(--color-brand-700);
+    text-decoration: underline;
+  }
+
+
 }
 
 /* tools */

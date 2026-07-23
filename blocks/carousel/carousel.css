@@ -1,11 +1,13 @@
 main > .section .carousel-wrapper {
     max-width: unset;
     padding: 0;
+    border: 10px solid green;
 }
 
 .carousel-container h2, .carousel-container p {
     padding: 0 var(--spacing-xxlarge);
     text-align: center;
+    color: gold;
 }
 
 .carousel .carousel-slides-container {
