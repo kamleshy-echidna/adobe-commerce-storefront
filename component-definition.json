@@ -647,6 +647,16 @@
               "type": "key-value-block"
             }
           }
+        },
+        {
+          "title": "Mega Menu",
+          "id": "mega-menu",
+          "model": "mega-menu",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
         }
       ]
     },

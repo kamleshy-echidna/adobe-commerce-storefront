@@ -529,6 +529,18 @@
     ]
   },
   {
+    "id": "mega-menu",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string",
+        "description": "Optional label for authoring. Category navigation is loaded from the catalog at runtime."
+      }
+    ]
+  },
+  {
     "id": "product-details",
     "fields": [
       {

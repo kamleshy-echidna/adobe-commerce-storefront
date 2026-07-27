@@ -57,6 +57,9 @@
         },
         {
           "...": "../blocks/commerce-*/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/mega-menu/_*.json#/definitions"
         }
       ]
     },
