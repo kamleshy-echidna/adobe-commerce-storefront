@@ -1,0 +1,217 @@
+/*
+ * Mega Menu
+ *
+ * Horizontal top-level bar with hover/focus-reveal dropdown panels.
+ * The block produces nested <ul>/<li> markup:
+ *   .mega-menu > ul            -> top-level bar
+ *     > li > a                 -> top category label
+ *          > ul                -> dropdown panel (subcategories)
+ *              > li > a        -> subcategory (column heading)
+ *                   > ul       -> leaf links
+ *
+ * All selectors are scoped to .mega-menu. When the block is nested inside a
+ * header nav <li> it replaces itself with a bare <ul> and the header's own
+ * submenu styles take over instead of these.
+ *
+ * Mobile-first: base styles are the stacked (no-hover) layout; the horizontal
+ * hover mega menu is enabled from 900px up.
+ */
+
+/* Nested-menu levels are interleaved with :hover/:focus-within states that
+   target different elements, so descending-specificity ordering is a false
+   positive here. */
+/* stylelint-disable no-descending-specificity */
+header nav .nav-sections ul>li ul {
+  flex-direction: column;
+}
+
+.mega-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mega-menu li {
+  margin: 0;
+}
+
+.mega-menu a,
+.mega-menu p {
+  display: block;
+  margin: 0;
+  text-decoration: none;
+  color: var(--color-neutral-800);
+  font: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+ * Mobile (base): vertical stack, all levels visible and indented.
+ * ------------------------------------------------------------------------- */
+
+.mega-menu > ul > li > a {
+  padding: var(--spacing-small) 0;
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.mega-menu ul ul {
+  padding-left: var(--spacing-medium);
+}
+
+.mega-menu ul ul a,
+.mega-menu ul ul p {
+  padding: var(--spacing-xsmall, 6px) 0;
+  color: var(--color-neutral-700);
+}
+
+.mega-menu a:hover {
+  color: var(--color-brand-700);
+}
+
+/* ---------------------------------------------------------------------------
+ * Desktop (>=900px): horizontal bar with hover dropdown panels.
+ * ------------------------------------------------------------------------- */
+
+@media (min-width: 900px) {
+  .mega-menu {
+    position: relative;
+    font-size: var(--type-body-1-font-size, 1rem);
+  }
+
+  /* Top-level bar */
+  .mega-menu > ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-small);
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+
+  .mega-menu > ul > li {
+    position: relative;
+  }
+
+  .mega-menu > ul > li > a,
+  .mega-menu > ul > li > p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--spacing-medium) var(--spacing-small);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  /* Caret for items that have a dropdown */
+  .mega-menu > ul > li:has(ul) > a::after,
+  .mega-menu > ul > li:has(ul) > p::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid currentcolor;
+    border-bottom: 2px solid currentcolor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.2s ease;
+    opacity: 0.6;
+  }
+
+  .mega-menu > ul > li:hover > a,
+  .mega-menu > ul > li:focus-within > a {
+    color: var(--color-brand-700);
+    border-bottom-color: var(--color-brand-700);
+  }
+
+  .mega-menu > ul > li:hover > a::after,
+  .mega-menu > ul > li:focus-within > a::after {
+    transform: translateY(0) rotate(-135deg);
+    opacity: 1;
+  }
+
+  /* Dropdown panel */
+  .mega-menu > ul > li > ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-small) var(--spacing-xbig);
+
+    /* max-content lets the row grow to fit all columns side by side; an
+       absolutely-positioned flex box otherwise shrinks to one column and
+       wraps the rest. max-width caps it and re-enables wrapping. */
+    width: max-content;
+    min-width: 260px;
+    max-width: min(90vw, 900px);
+    padding: var(--spacing-big) var(--spacing-xbig);
+    background-color: var(--background-color, #fff);
+    border: 1px solid var(--color-neutral-200);
+    border-top: 3px solid var(--color-brand-700);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 16px 40px rgb(0 0 0 / 12%);
+
+    /* hidden until hover/focus */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+  }
+
+  .mega-menu > ul > li:hover > ul,
+  .mega-menu > ul > li:focus-within > ul {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+
+  /* Keep the last items' panels from overflowing the right edge */
+  .mega-menu > ul > li:last-child > ul {
+    left: auto;
+    right: 0;
+  }
+
+  /* Column = a subcategory and its leaf links */
+  .mega-menu > ul > li > ul > li {
+    min-width: 150px;
+  }
+
+  /* Subcategory that HAS leaf links -> styled as a column heading */
+  .mega-menu > ul > li > ul > li:has(ul) > a,
+  .mega-menu > ul > li > ul > li:has(ul) > p {
+    padding: 0 0 var(--spacing-small);
+    margin-bottom: var(--spacing-small);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+
+  /* Subcategory with NO leaf links -> compact plain link, so leaf-less
+     categories (e.g. Collections) don't leave large empty heading gaps */
+  .mega-menu > ul > li > ul > li:not(:has(ul)) > a,
+  .mega-menu > ul > li > ul > li:not(:has(ul)) > p {
+    padding: 4px 0;
+    font-weight: 400;
+    color: var(--color-neutral-700);
+  }
+
+  /* Leaf links inside a column */
+  .mega-menu > ul > li > ul ul {
+    padding-left: 0;
+    gap: 0;
+  }
+
+  .mega-menu > ul > li > ul ul a,
+  .mega-menu > ul > li > ul ul p {
+    padding: 4px 0;
+    font-weight: 400;
+    color: var(--color-neutral-700);
+    border: 0;
+  }
+
+  .mega-menu > ul > li > ul a:hover {
+    color: var(--color-brand-700);
+  }
+}

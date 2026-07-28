@@ -537,6 +537,20 @@
         "label": "Title",
         "valueType": "string",
         "description": "Optional label for authoring. Category navigation is loaded from the catalog at runtime."
+      },
+      {
+        "component": "text",
+        "name": "root",
+        "label": "Root Category ID",
+        "valueType": "string",
+        "description": "Commerce category ID to use as the menu root. Defaults to \"2\" (store root)."
+      },
+      {
+        "component": "text",
+        "name": "depth",
+        "label": "Max Depth",
+        "valueType": "string",
+        "description": "Maximum number of category levels to render. Defaults to 3."
       }
     ]
   },
