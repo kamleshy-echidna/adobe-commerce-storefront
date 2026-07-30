@@ -54,15 +54,16 @@ async function buildTree(node, depth, maxDepth) {
 /**
  * Builds the storefront link for a category.
  * The Catalog Service returns `urlPath` as a slash-separated path
- * (e.g. "collections/new-luma-yoga-collection"), but category pages in this
- * site are flat documents with the slashes replaced by dashes
- * (e.g. /collections-new-luma-yoga-collection). rootLink adds the store-view
+ * (e.g. "collections/new-luma-yoga-collection"), which is used directly as the
+ * category URL. These nested URLs are served by a single folder-mapped
+ * product-list-page template (see product-list-page.js `dynamic` config), so
+ * they must match the catalog `urlPath` exactly. rootLink adds the store-view
  * root path.
  * @param {string} urlPath slash-separated catalog url path
  * @returns {string} localized href
  */
 function categoryHref(urlPath) {
-  return rootLink(`/${urlPath.replace(/\//g, '-')}`);
+  return rootLink(`/${urlPath}`);
 }
 
 /**

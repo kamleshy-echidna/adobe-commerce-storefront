@@ -22,7 +22,7 @@ Configuration is read from the DOM with `readBlockConfig`. The defaults live as 
 
 The block uses `CS_FETCH_GRAPHQL` (Catalog Service) from `scripts/commerce.js` and the `GET_CATEGORY_CHILDREN` query to load categories by ID. Each level requests `id`, `name`, `urlPath`, and `children`. In the Catalog Service schema, `children` is a list of child category **IDs** (`[String!]`), so the block fetches all of a node's children in a **single batched request** per level and reuses that data — a node is never fetched more than once.
 
-Category pages in this site are **flat documents** with slashes replaced by dashes, so the block converts the catalog `urlPath` accordingly: `collections/new-luma-yoga-collection` → `/collections-new-luma-yoga-collection`. Links are then wrapped in `rootLink()` so store-view root paths and locale prefixes are respected. (The slash form, `/collections/new-luma-yoga-collection`, 404s.)
+Category links use the catalog `urlPath` directly as a **nested path** (`collections/new-luma-yoga-collection` → `/collections/new-luma-yoga-collection`), wrapped in `rootLink()` for store-view root paths and locale prefixes. These nested URLs are served by a single folder-mapped `product-list-page` template (see `blocks/product-list-page` `dynamic` config), so a document per category is not required. Folder mapping must be configured in the site config for these URLs to resolve.
 
 ### URL Parameters
 

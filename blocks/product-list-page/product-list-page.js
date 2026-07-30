@@ -15,6 +15,7 @@ import { tryRenderAemAssetsImage } from '@dropins/tools/lib/aem/assets.js';
 // Event Bus
 import { events } from '@dropins/tools/event-bus.js';
 // AEM
+import { getRootPath } from '@dropins/tools/lib/aem/configs.js';
 import { readBlockConfig } from '../../scripts/aem.js';
 import { fetchPlaceholders, getProductLink } from '../../scripts/commerce.js';
 import { getSearchStateFromUrl, applySearchStateToUrl } from './search-url.js';
@@ -23,11 +24,39 @@ import { getSearchStateFromUrl, applySearchStateToUrl } from './search-url.js';
 import '../../scripts/initializers/search.js';
 import '../../scripts/initializers/wishlist.js';
 
+/**
+ * Derives the category path from the current URL, for folder-mapped category
+ * pages that serve many categories from a single template document. Strips the
+ * store-view root and the leading/trailing slashes, so "/gear/bags" (root "/")
+ * becomes "gear/bags" — the slash-separated `categoryPath` the Catalog Service
+ * expects. Category template URLs must therefore use the real nested category
+ * path (e.g. /gear/bags), not a flattened one (e.g. /gear-bags).
+ * @returns {string} slash-separated category path (e.g. "gear/bags")
+ */
+function categoryPathFromUrl() {
+  const root = getRootPath().replace(/\/$/, '');
+  let path = window.location.pathname;
+  if (root && path.startsWith(root)) {
+    path = path.slice(root.length);
+  }
+  return path.replace(/^\/+|\/+$/g, '');
+}
+
 export default async function decorate(block) {
   const labels = await fetchPlaceholders();
 
   const config = readBlockConfig(block);
   const pageSize = parseInt(config.pagesize, 10) || 9;
+
+  // Resolve which category to show:
+  // - `urlpath` in block config -> a fixed category (one document per category), or
+  // - `dynamic: true` in config -> derive the category from the page URL, so a
+  //   single folder-mapped template document can serve every category page.
+  // The search page (no urlpath, no dynamic) is unaffected.
+  let { urlpath } = config;
+  if (!urlpath && config.dynamic === 'true') {
+    urlpath = categoryPathFromUrl();
+  }
 
   const fragment = document.createRange().createContextualFragment(`
     <div class="search__wrapper">
@@ -52,8 +81,8 @@ export default async function decorate(block) {
 
   // Add url path back to the block for enrichment, incase enrichment block is
   // executed after the plp block and block config is not available
-  if (config.urlpath) {
-    block.dataset.urlpath = config.urlpath;
+  if (urlpath) {
+    block.dataset.urlpath = urlpath;
   }
 
   const searchState = getSearchStateFromUrl(new URL(window.location.href));
@@ -68,7 +97,7 @@ export default async function decorate(block) {
   window.history.replaceState({}, '', normalizedUrl.toString());
 
   // Request search based on the page type on block load
-  if (config.urlpath) {
+  if (urlpath) {
     // If it's a category page...
     await search({
       phrase: '', // search all products in the category
@@ -76,7 +105,7 @@ export default async function decorate(block) {
       pageSize,
       sort: searchState?.sort?.length ? searchState.sort : [{ attribute: 'position', direction: 'DESC' }],
       filter: [
-        { attribute: 'categoryPath', eq: config.urlpath }, // Add category filter
+        { attribute: 'categoryPath', eq: urlpath }, // Add category filter
         // Always add visibility filter to the request
         visibilityFilter,
         ...userFilters,
